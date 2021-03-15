@@ -19,18 +19,18 @@ provider "panos" {
   password = var.password
 }
 
-resource "panos_security_policy" "example" {
-    rule {
-        name = "allow"
-        source_zones = ["any"]
-        source_addresses = ["any"]
-        source_users = ["any"]
-        hip_profiles = ["any"]
-        destination_zones = ["all"]
-        destination_addresses = ["any"]
-        applications = ["any"]
-        services = ["application-default"]
-        categories = ["any"]
-        action = "allow"
-    }
+resource "panos_security_policy" "rule1" {
+  rule {
+    name = "allow"
+    source_zones = ["any"]
+    source_addresses = ["any"]
+    source_zones = ["any"]
+    hip_profiles = ["any"]
+    destination_zones = ["all"]
+    destination_addresses = ["any"]
+    applications = ["any"]
+    services = ["application-default"]
+    categories = ["any"]
+    action = "allow"
+  }
 }
