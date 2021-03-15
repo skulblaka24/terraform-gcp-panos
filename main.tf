@@ -24,7 +24,7 @@ resource "panos_security_policy" "rule1" {
     name = "allow"
     source_zones = ["any"]
     source_addresses = ["any"]
-    source_zones = ["any"]
+    source_users = ["any"]
     hip_profiles = ["any"]
     destination_zones = ["all"]
     destination_addresses = ["any"]
