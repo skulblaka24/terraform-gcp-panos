@@ -21,7 +21,7 @@ provider "panos" {
 
 resource "panos_security_policy" "example" {
     rule {
-        name = "allow everything lolwat"
+        name = "allow"
         source_zones = ["any"]
         source_addresses = ["any"]
         source_users = ["any"]
