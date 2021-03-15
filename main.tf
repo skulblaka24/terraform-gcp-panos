@@ -14,6 +14,9 @@ terraform {
 
 provider "panos" {
   # Configuration options
+  hostname = "${var.fw_ip}"
+  username = "${var.username}"
+  password = "${var.password}"
 }
 
 resource "panos_security_policy" "example" {
