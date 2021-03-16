@@ -17,71 +17,60 @@ provider "panos" {
   logging = ["action", "op", "uid"]
 }
 
+resource "panos_ethernet_interface" "eth1" {
+  name = "ethernet1/1"
+  vsys = "vsys1"
+  mode = "layer3"
+  enable_dhcp = true
+  create_dhcp_default_route = true
+}
+
+resource "panos_ethernet_interface" "eth2" {
+  name = "ethernet1/2"
+  vsys = "vsys1"
+  mode = "layer3"
+  enable_dhcp = true
+  depends_on = [panos_ethernet_interface.eth1]
+}
+
+resource "panos_virtual_router" "vr" {
+  name = "default"
+  interfaces = [
+        "${panos_ethernet_interface.eth1.name}",
+        "${panos_ethernet_interface.eth2.name}"
+  ]
+  depends_on = [panos_ethernet_interface.eth2]
+}
+
+resource "panos_zone" "int" {
+  name = "L3-trust"
+  mode = "layer3"
+  interfaces = ["${panos_ethernet_interface.eth1.name}"]
+  depends_on = [panos_virtual_router.vr]
+}
+
+resource "panos_zone" "ext" {
+  name = "L3-untrust"
+  mode = "layer3"
+  interfaces = ["${panos_ethernet_interface.eth2.name}"]
+  depends_on = [panos_zone.ext]
+}
+
 resource "panos_security_policy" "rule1" {
   rule {
-    name = "allow-all"
-    source_zones = ["any"]
+    name = "allow-int-to-ext"
+    source_zones = ["L3-trust"]
     source_addresses = ["any"]
     source_users = ["any"]
     hip_profiles = ["any"]
-    destination_zones = ["any"]
+    destination_zones = ["L3-untrust"]
     destination_addresses = ["any"]
     applications = ["any"]
     services = ["application-default"]
     categories = ["any"]
     action = "allow"
   }
-}
-
-resource "panos_security_policy" "rule2" {
-  rule {
-    name = "allow-nginx-http"
-    source_zones = ["any"]
-    source_addresses = ["any"]
-    source_users = ["any"]
-    hip_profiles = ["any"]
-    destination_zones = ["Zone-vm-1"]
-    destination_addresses = ["any"]
-    applications = ["any"]
-    services = ["service-http"]
-    categories = ["any"]
-    action = "allow"
-  }
-  depends_on = [panos_security_policy.rule1]
-}
-
-resource "panos_security_policy" "rule3" {
-  rule {
-    name = "allow-nginx-https"
-    source_zones = ["any"]
-    source_addresses = ["any"]
-    source_users = ["any"]
-    hip_profiles = ["any"]
-    destination_zones = ["Zone-vm-1"]
-    destination_addresses = ["any"]
-    applications = ["any"]
-    services = ["service-https"]
-    categories = ["any"]
-    action = "allow"
-  }
-  depends_on = [panos_security_policy.rule2]
-}
-
-resource "panos_security_policy" "rule4" {
-  rule {
-    name = "allow-all-nginx-ssh-access"
-    source_zones = ["any"]
-    source_addresses = ["any"]
-    source_users = ["any"]
-    hip_profiles = ["any"]
-    destination_zones = ["Zone-vm-1"]
-    destination_addresses = ["any"]
-    applications = ["any"]
-    services = ["service-ssh"]
-    categories = ["any"]
-    action = "allow"
-  }
-  depends_on = [panos_security_policy.rule3]
+  depends_on = [panos_zone.ext]
 }
 
 resource "null_resource" "commit_fw" {
