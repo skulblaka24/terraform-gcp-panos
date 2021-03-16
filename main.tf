@@ -41,4 +41,5 @@ resource "null_resource" "commit_fw" {
   provisioner "local-exec" {
     command = "./commit.sh ${var.fw_ip} ${var.password}"
   }
+  depends_on = [panos_security_policy.rule1]
 }
