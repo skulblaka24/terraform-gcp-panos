@@ -19,11 +19,18 @@ provider "panos" {
   password = var.password
 }
 
-resource "panos_vlan" "example" {
-    name = "myVlan"
-    vlan_interface = panos_vlan_interface.vli.name
-}
-resource "panos_vlan_interface" "vli" {
-    name = "vlan.6"
-    vsys = "vsys1"
+resource "panos_security_policy" "rule1" {
+  rule {
+    name = "allow"
+    source_zones = ["any"]
+    source_addresses = ["any"]
+    source_users = ["any"]
+    hip_profiles = ["any"]
+    destination_zones = ["any"]
+    destination_addresses = ["any"]
+    applications = ["any"]
+    services = ["application-default"]
+    categories = ["any"]
+    action = "allow"
+  }
 }
