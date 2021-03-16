@@ -1,3 +1,7 @@
 variable "fw_ip" {}
 variable "username" {}
-variable "password" {}
+variable "password" {
+  type = string
+  sensitive = true
+  default = "secret"
+}
