@@ -21,15 +21,14 @@ resource "panos_ethernet_interface" "eth1" {
   name = "ethernet1/1"
   vsys = "vsys1"
   mode = "layer3"
-  enable_dhcp = true
-  create_dhcp_default_route = true
+  static_ips = ["10.133.0.3/24"]
 }
 
 resource "panos_ethernet_interface" "eth2" {
   name = "ethernet1/2"
   vsys = "vsys1"
   mode = "layer3"
-  enable_dhcp = true
+  static_ips = ["10.135.0.3/24"]
   depends_on = [panos_ethernet_interface.eth1]
 }
 
