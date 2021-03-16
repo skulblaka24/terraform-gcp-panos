@@ -39,6 +39,6 @@ resource "null_resource" "commit_fw" {
 #  }
 
   provisioner "local-exec" {
-    command = "go run ./firewall-commit -host ${var.fw_ip} -user admin -pass ${var.password}"
+    command = "./go run ./firewall-commit -host ${var.fw_ip} -user admin -pass ${var.password}"
   }
 }
