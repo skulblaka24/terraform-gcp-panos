@@ -39,6 +39,6 @@ resource "null_resource" "commit_fw" {
 #  }
 
   provisioner "local-exec" {
-    command = "./commit.sh ${fw_ip} ${password}"
+    command = "./commit.sh ${var.fw_ip} ${var.password}"
   }
 }
