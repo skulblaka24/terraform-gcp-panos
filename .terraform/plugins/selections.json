@@ -1,0 +1,6 @@
+{
+  "registry.terraform.io/paloaltonetworks/panos": {
+    "hash": "h1:9OqgN+CWcy5jStapF0m0argb68CzA3SpUBb3dBwI5Wg=",
+    "version": "1.8.0"
+  }
+}
