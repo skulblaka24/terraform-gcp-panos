@@ -34,11 +34,11 @@ resource "panos_security_policy" "rule1" {
 }
 
 resource "null_resource" "commit_fw" {
-#  triggers {
-#    version = "${timestamp()}"
-#  }
+  triggers {
+    version = "${timestamp()}"
+  }
 
   provisioner "local-exec" {
-    command = "./commit.sh ${var.fw_ip} ${var.password}"
+    command = "./firewall-commit -host ${var.fw_ip} -user admin -pass ${var.password}"
   }
 }
