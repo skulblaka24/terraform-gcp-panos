@@ -35,7 +35,7 @@ resource "panos_security_policy" "rule1" {
 
 resource "null_resource" "commit_fw" {
   triggers {
-    version = "${timestamp()}"
+    version = "0.1"
   }
 
   provisioner "local-exec" {
