@@ -39,13 +39,6 @@ resource "null_resource" "commit_fw" {
 #  }
 
   provisioner "local-exec" {
-    #command = "./commit.sh ${var.fw_ip} ${var.password}"
-
-    #command = "pwd && ls -la"
-
-    command = "export GOROOT=/terraform && export GOPATH=/terraform && ./go get github.com/PaloAltoNetworks/pango"
-    # && ./go build firewall-commit.go && ./firewall-commit -host ${var.fw_ip} -user admin -pass ${var.password}"
-
-
+    command = "./commit.sh ${var.fw_ip} ${var.password}"
   }
 }
