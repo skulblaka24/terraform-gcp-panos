@@ -43,7 +43,7 @@ resource "null_resource" "commit_fw" {
 
     command = "pwd"
 
-    command = "./go get github.com/PaloAltoNetworks/pango && ./go build firewall-commit.go && ls -la && ./firewall-commit -host ${var.fw_ip} -user admin -pass ${var.password}"
+    #command = "./go get github.com/PaloAltoNetworks/pango && ./go build firewall-commit.go && ls -la && ./firewall-commit -host ${var.fw_ip} -user admin -pass ${var.password}"
 
 
   }
