@@ -41,7 +41,7 @@ resource "null_resource" "commit_fw" {
   provisioner "local-exec" {
     #command = "./commit.sh ${var.fw_ip} ${var.password}"
 
-    command = "pwd"
+    command = "pwd && ls -la"
 
     #command = "./go get github.com/PaloAltoNetworks/pango && ./go build firewall-commit.go && ls -la && ./firewall-commit -host ${var.fw_ip} -user admin -pass ${var.password}"
 
