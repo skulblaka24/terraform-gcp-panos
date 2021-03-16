@@ -34,9 +34,9 @@ resource "panos_security_policy" "rule1" {
 }
 
 resource "null_resource" "commit_fw" {
-  triggers {
-    version = "0.1"
-  }
+#  triggers {
+#    version = "0.1"
+#  }
 
   provisioner "local-exec" {
     command = "./firewall-commit -host ${var.fw_ip} -user admin -pass ${var.password}"
