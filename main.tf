@@ -31,7 +31,6 @@ resource "panos_security_policy" "rule1" {
     categories = ["any"]
     action = "allow"
   }
-  depends_on = [panos_zone.ext]
 }
 
 resource "null_resource" "commit_fw" {
