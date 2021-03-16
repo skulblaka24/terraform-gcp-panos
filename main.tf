@@ -35,8 +35,8 @@ resource "panos_ethernet_interface" "eth2" {
 resource "panos_virtual_router" "vr" {
   name = "default"
   interfaces = [
-        "${panos_ethernet_interface.eth1.name}",
-        "${panos_ethernet_interface.eth2.name}"
+        panos_ethernet_interface.eth1.name,
+        panos_ethernet_interface.eth2.name
   ]
   depends_on = [panos_ethernet_interface.eth2]
 }
@@ -44,7 +44,7 @@ resource "panos_virtual_router" "vr" {
 resource "panos_zone" "int" {
   name = "L3-trust"
   mode = "layer3"
-  interfaces = ["${panos_ethernet_interface.eth1.name}"]
+  interfaces = [panos_ethernet_interface.eth1.name]
   depends_on = [panos_virtual_router.vr]
 }
 
