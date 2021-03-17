@@ -1,3 +1,5 @@
+# Palo Alto rule management
+
 terraform {
   required_providers {
     panos = {
